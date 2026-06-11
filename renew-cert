@@ -50,14 +50,14 @@
 # Execute the exact ACME command supported by your MikroTik x86
 /certificate add-acme domain-names=$domainName;
 
-# Immediately disable services and firewall rules right after hitting the API
-/ip service disable [find name="www" !dynamic];
-# /ip firewall filter disable [find where comment=$fwComment];
-/ipv6 firewall filter disable [find where comment=$fwComment];
-
 # Wait 30 seconds for the background ACME challenge process to fetch the new cert
 :log info "LE SCRIPT: Waiting 30s for ACME challenge process to complete...";
 :delay 30s;
+
+# Disable services and firewall rules right after hitting the API
+/ip service disable [find name="www" !dynamic];
+# /ip firewall filter disable [find where comment=$fwComment];
+/ipv6 firewall filter disable [find where comment=$fwComment];
 
 # ===== UPDATE SERVICES WITH NEW CERTIFICATE =====
 
